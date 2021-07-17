@@ -81,7 +81,7 @@ template.innerHTML = `
         <i class="fas fa-minus collapse-icon"></i>
     </div>
     <div class="coll-content">
-        <p>Location:    <span class="location">location</span></p>
+        <p>Location:    <span class="lat"></span>    <span>  </span>    <span class="long"></span></p>
         <p>Clue:</p>
         <textarea name="clue" id="clue" cols="30" rows="10"></textarea>
         <div class="btns">
@@ -126,6 +126,34 @@ class PointMarker extends HTMLElement {
           };
     };
 
+    //  Grabs device location
+    getLocation() {
+        function locSuccess(pos){
+            let location = pos.coords;
+
+            console.log('Your current position is:');
+            console.log(`Latitude : ${location.latitude}`);
+            console.log(`Longitude: ${location.longitude}`);
+            console.log(`More or less ${location.accuracy} meters.`);
+            latVal.textContent = `${location.latitude}`;
+            longVal.textContent = `${location.longitude}`;
+        }
+
+        function locFail(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`)
+        }
+
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        }
+
+        const latVal = this.shadowRoot.querySelector(".lat");
+        const longVal = this.shadowRoot.querySelector(".long");
+        window.navigator.geolocation.getCurrentPosition(locSuccess, locFail, options);
+    }
+
     // Deletes point marker
     deletePoint() {
         this.disconnectedCallback();
@@ -136,16 +164,15 @@ class PointMarker extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.querySelector(".collapse-icon").addEventListener("click", () => this.expandCollapse());
         this.shadowRoot.querySelector(".del-btn").addEventListener("click", () => this.deletePoint());
-        console.log("connectedCallback() called");
-        console.log(this.isConnected)
+        this.shadowRoot.querySelector(".loc-btn").addEventListener("click", () => this.getLocation());
     };
     
     // Adds event listener on all elements with class of del-btn
     disconnectedCallback() {
         this.shadowRoot.querySelector(".collapse-icon").removeEventListener("click", () => this.expandCollapse());
         this.shadowRoot.querySelector(".del-btn").removeEventListener("click", () => this.deletePoint());
-        console.log("disconnectedCallback() called");
-        console.log(this.isConnected)
+        this.shadowRoot.querySelector(".loc-btn").removeEventListener("click", () => this.getLocation());
+
     };
 };
 

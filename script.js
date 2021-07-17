@@ -19,7 +19,8 @@ savePoints.addEventListener("click", () => {
     for (i = 0; i < markers.length; i++) {    
         // Grabs all relevant info
         let name = markers[i].shadowRoot.querySelector(".name").textContent;
-        let location = markers[i].shadowRoot.querySelector(".location").textContent;
+        let lat = markers[i].shadowRoot.querySelector(".lat").textContent;
+        let long = markers[i].shadowRoot.querySelector(".long").textContent;
         let clue = markers[i].shadowRoot.querySelector("#clue").value;
         
         // Saves all relevant info in object form
@@ -27,13 +28,16 @@ savePoints.addEventListener("click", () => {
         point = {
             id: `${i}`,
             name: `${name}`,
-            location: `${location} ${i}`,
+            location: {
+                lat: `${lat}`,
+                long: `${long}` 
+            },
             clue: `${clue}`
         }
         
         // Adds point to data
         data.push(point)
     }
+    console.log(data);
     return data;
 });
-
