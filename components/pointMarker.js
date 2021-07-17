@@ -140,6 +140,7 @@ class PointMarker extends HTMLElement {
         }
 
         function locFail(err) {
+            alert(`ERROR(${err.code}): ${err.message}`)
             console.warn(`ERROR(${err.code}): ${err.message}`)
         }
 
