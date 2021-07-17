@@ -135,6 +135,7 @@ class PointMarker extends HTMLElement {
             console.log(`Latitude : ${location.latitude}`);
             console.log(`Longitude: ${location.longitude}`);
             console.log(`More or less ${location.accuracy} meters.`);
+            alert(`More or less ${location.accuracy} meters.`)
             latVal.textContent = `${location.latitude}`;
             longVal.textContent = `${location.longitude}`;
         }
