@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>Create A Hunt</title>
+    <link rel="manifest" href="manifest.webmanifest">
+
 </head>
 <body>
     <header>
@@ -24,16 +26,21 @@
         <div class="markers">
         </div>
 
-        <button class="btn add-point add">
+        <button class="btn add-point add noSelect">
             <h2>Add Point +</h2>
         </button>
 
-        <button class="btn add-point save">
+        <button class="btn add-point save noSelect">
             <h2>Save Points</h2>
         </button>
 
     </main>
 
+    <script>
+        if("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./serviceWorker.js");
+        }
+    </script>
     <script src="script.js"></script>
     <script src="/components/pointMarker.js"></script>
 </body>

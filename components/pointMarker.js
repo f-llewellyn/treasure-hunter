@@ -39,8 +39,14 @@ template.innerHTML = `
             justify-content: center;
             font-size: medium;
             cursor: pointer;
+            transition: 0s;
+            opacity: 100%;
         }
-        
+
+        .btn:active {
+            opacity: 80%;
+        }
+
         .del-btn {
             background-color: var(--fail-color);
         }
@@ -70,17 +76,17 @@ template.innerHTML = `
     </style>
 
     <section class="point-marker">
-    <div class="const-content">
+    <div class="const-content noSelect">
         <h2 class="name">New Point</h2>
         <i class="fas fa-minus collapse-icon"></i>
     </div>
     <div class="coll-content">
-        <p>Location: <p class="location">location</p></p>
+        <p>Location:    <span class="location">location</span></p>
         <p>Clue:</p>
         <textarea name="clue" id="clue" cols="30" rows="10"></textarea>
         <div class="btns">
-            <button class="btn loc-btn">SET CURRENT LOCATION</button>
-            <button class="btn del-btn">DELETE POINT</button>
+            <button class="btn loc-btn noSelect">SET CURRENT LOCATION</button>
+            <button class="btn del-btn noSelect">DELETE POINT</button>
         </div>
     </div>
     </section>

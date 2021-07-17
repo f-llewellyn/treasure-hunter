@@ -2,11 +2,15 @@
 
 :root {
     --primary-color: #FA4D05;
+    --primary-snd-color: #fa9805;
     --secondary-color: #333;
     --tertiary-color: #fff;
     --success-color: #97FD87;
+    --success-snd-color: #87fdae;
     --fail-color: #FF5555;
+    --fail-snd-color: #ff6955;
     --bg-color: #E5E5E5;
+    --bg-snd-color: #c0c0c0;
     --font-color: #808080;
 }
 
@@ -15,6 +19,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    outline: none;
 }
 
 html {
@@ -75,8 +80,13 @@ main h1 {
     justify-content: center;
     font-size: medium;
     cursor: pointer;
+    transition: 0s;
+    opacity: 100%;
 }
 
+.btn:active {
+    opacity: 80%;
+}
 
 .add-point {
     background-color: var(--bg-color);
@@ -87,9 +97,39 @@ main h1 {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    opacity: 100%;
 }
 
 .save {
     background-color: var(--success-color);
+    opacity: 100%;
 }
 
+.noSelect {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media screen and (max-width: 700px){
+    
+    nav h2 {
+        font-size: 18px;
+    }
+
+    nav {
+        padding-left: 2rem;
+    }
+    
+    .btns {
+        flex-direction: column;
+    }
+
+    .loc-btn {
+        margin-bottom: 1rem;
+    }
+}
