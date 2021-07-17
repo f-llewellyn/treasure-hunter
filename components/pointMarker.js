@@ -75,7 +75,7 @@ template.innerHTML = `
         <i class="fas fa-minus collapse-icon"></i>
     </div>
     <div class="coll-content">
-        <p>Location:</p>
+        <p>Location: <p class="location">location</p></p>
         <p>Clue:</p>
         <textarea name="clue" id="clue" cols="30" rows="10"></textarea>
         <div class="btns">
@@ -103,6 +103,9 @@ class PointMarker extends HTMLElement {
             coll.nextElementSibling.style.maxHeight = `${coll.nextElementSibling.scrollHeight}px`;
         }, 100)
 
+        const name = this.shadowRoot.querySelector(".name")
+        name.contentEditable = "true";
+
 
     };
 
@@ -119,21 +122,24 @@ class PointMarker extends HTMLElement {
 
     // Deletes point marker
     deletePoint() {
-        const delPoint = this.shadowRoot.querySelector(".del-btn");
-        let pointMarker = delPoint.parentNode.parentNode.parentNode;
-        pointMarker.parentNode.removeChild(pointMarker);
+        this.disconnectedCallback();
+        this.remove();
     };
 
     // Adds event listener on all elements with class of const-content or del-btn
     connectedCallback() {
-        this.shadowRoot.querySelector(".const-content").addEventListener("click", () => this.expandCollapse());
+        this.shadowRoot.querySelector(".collapse-icon").addEventListener("click", () => this.expandCollapse());
         this.shadowRoot.querySelector(".del-btn").addEventListener("click", () => this.deletePoint());
+        console.log("connectedCallback() called");
+        console.log(this.isConnected)
     };
     
     // Adds event listener on all elements with class of del-btn
     disconnectedCallback() {
-        this.shadowRoot.querySelector(".const-content").removeEventListener();
-        this.shadowRoot.querySelector(".del-btn").removeEventListener();
+        this.shadowRoot.querySelector(".collapse-icon").removeEventListener("click", () => this.expandCollapse());
+        this.shadowRoot.querySelector(".del-btn").removeEventListener("click", () => this.deletePoint());
+        console.log("disconnectedCallback() called");
+        console.log(this.isConnected)
     };
 };
 

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #FA4D05;
+            --secondary-color: #333;
+            --tertiary-color: #fff;
+            --success-color: #97FD87;
+            --fail-color: #FF5555;
+            --bg-color: #E5E5E5;
+            --font-color: #808080;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            line-height: 2;
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        nav {
+            display: flex;
+            background-color: var(--secondary-color);
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            padding-left: 5rem;
+            /* color: var(--primary-color); */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-evenly;
+            width: 50%;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        main h1 {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            border: none;
+            padding: .5rem 1rem;
+            min-width: 200px;
+            color: var(--tertiary-color);
+            border-radius: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: medium;
+            cursor: pointer;
+        }
+
+
+        .add-point {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            margin: 1rem 0;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .save {
+            background-color: var(--success-color);
+        }
+    </style>
+    <title>Create A Hunt</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <h2>HOME</h2>
+            <ul>
+                <li><h2>HUNT</h2></li>
+                <li><h2>CREATE</h2></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>CREATE A HUNT</h1>
+        <div class="markers">
+        </div>
+
+        <button class="btn add-point add">
+            <h2>Add Point +</h2>
+        </button>
+
+        <button class="btn add-point save">
+            <h2>Save Points</h2>
+        </button>
+
+    </main>
+
+    <script>
+        // Declares template variable, containing the html template for the component
+        const template = document.createElement("template");
+        template.innerHTML = `
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+            <link rel="stylesheet" href="css/style.css">
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+                .point-marker {
+                    color: var(--tertiary-color);
+                    background-color: var(--secondary-color);
+                    padding: 2rem;
+                    border-radius: 20px;
+                    margin: 1rem 0;
+                }
+                
+                .point-marker h2 {
+                    line-height: 1rem;
+                }
+                
+                .point-marker textarea {
+                    width: 100%;
+                    height: 100px;
+                    border-radius: 20px;
+                    resize: vertical;
+                    padding: .5rem;
+                    margin: 1rem 0;
+                }
+                
+                .btn {
+                    background-color: var(--primary-color);
+                    border: none;
+                    padding: .5rem 1rem;
+                    min-width: 200px;
+                    color: var(--tertiary-color);
+                    border-radius: 10px;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: medium;
+                    cursor: pointer;
+                }
+                
+                .del-btn {
+                    background-color: var(--fail-color);
+                }
+                
+                .btns {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-evenly;
+                }
+                
+                .coll-content {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 250ms ease-in-out;
+                }
+                
+                .collapse-icon {
+                    font-size: large;
+                }
+                
+                .const-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    cursor: pointer;
+                }
+            </style>
+
+            <section class="point-marker">
+            <div class="const-content">
+                <h2 class="name">New Point</h2>
+                <i class="fas fa-minus collapse-icon"></i>
+            </div>
+            <div class="coll-content">
+                <p>Location: <p class="location">location</p></p>
+                <p>Clue:</p>
+                <textarea name="clue" id="clue" cols="30" rows="10"></textarea>
+                <div class="btns">
+                    <button class="btn loc-btn">SET CURRENT LOCATION</button>
+                    <button class="btn del-btn">DELETE POINT</button>
+                </div>
+            </div>
+            </section>
+        `;
+
+        // Declares class PointMarker and casts it as an HTML element
+        class PointMarker extends HTMLElement {
+            // Initialises the class every time new object is made
+            constructor() {
+                super();
+
+                //  Declares shadow DOM and sets it to open
+                this.attachShadow({ mode: "open" });
+
+                this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+
+                setTimeout(() => {
+                    const coll = this.shadowRoot.querySelector(".const-content");
+                    coll.nextElementSibling.style.maxHeight = `${coll.nextElementSibling.scrollHeight}px`;
+                }, 100)
+
+                const name = this.shadowRoot.querySelector(".name")
+                name.contentEditable = "true";
+
+
+            };
+
+            // Collapses or expands the collapsable content
+            expandCollapse() {
+                const coll = this.shadowRoot.querySelector(".const-content");
+                let content = coll.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = `${content.scrollHeight + 30}px`;
+                };
+            };
+
+            // Deletes point marker
+            deletePoint() {
+                this.disconnectedCallback();
+                const delPoint = this.shadowRoot.querySelector(".del-btn");
+                let pointMarker = delPoint.parentNode.parentNode.parentNode;
+                pointMarker.remove();
+                pointMarker = null;
+            };
+
+            // Adds event listener on all elements with class of const-content or del-btn
+            connectedCallback() {
+                this.shadowRoot.querySelector(".collapse-icon").addEventListener("click", () => this.expandCollapse());
+                this.shadowRoot.querySelector(".del-btn").addEventListener("click", () => this.deletePoint());
+                console.log("connectedCallback() called");
+                console.log(this.isConnected)
+            };
+            
+            // Adds event listener on all elements with class of del-btn
+            disconnectedCallback() {
+                this.shadowRoot.querySelector(".collapse-icon").removeEventListener("click", () => this.expandCollapse());
+                this.shadowRoot.querySelector(".del-btn").removeEventListener("click", () => this.deletePoint());
+                console.log("disconnectedCallback() called");
+                console.log(this.isConnected)
+            };
+        };
+
+        // Defines <point-marker>
+        window.customElements.define("point-marker", PointMarker);
+
+
+        const addPoint = document.querySelector(".add");
+        const savePoints = document.querySelector(".save");
+        // Defines markers in preperation for later
+
+        // Adds point-marker element to markers div
+        addPoint.addEventListener("click", () => {
+            const pointContainer = document.querySelector(".markers");
+            const node = document.createElement("point-marker");
+            pointContainer.appendChild(node);
+        });
+
+        // Grabs all point-marker elements, grabs relevant data and adds it to data array
+        savePoints.addEventListener("click", () => {
+            // clears data
+            let data = []
+            markers = document.querySelectorAll("point-marker");
+            
+            // Iterates through markers
+            for (i = 0; i < markers.length; i++) {    
+                // Grabs all relevant info
+                let name = markers[i].shadowRoot.querySelector(".name").textContent;
+                let location = markers[i].shadowRoot.querySelector(".location").textContent;
+                let clue = markers[i].shadowRoot.querySelector("#clue").value;
+                
+                // Saves all relevant info in object form
+                let point = {}
+                point = {
+                    id: `${i}`,
+                    name: `${name}`,
+                    location: `${location} ${i}`,
+                    clue: `${clue}`
+                }
+                
+                // Adds point to data
+                data.push(point)
+                console.log(data)
+            }
+            return data;
+        });
+    </script>
+</body>
+</html>
