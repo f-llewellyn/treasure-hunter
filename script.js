@@ -1,30 +1,39 @@
-// const coll = document.querySelectorAll(".const-content");
-// const delPoint = document.querySelectorAll(".del-btn");
-const addPoint = document.querySelector(".add")
+const addPoint = document.querySelector(".add");
+const savePoints = document.querySelector(".save");
+// Defines markers in preperation for later
 
-// for (i = 0; i < coll.length; i++) {
-//   coll[i].nextElementSibling.style.maxHeight = `${coll[i].nextElementSibling.scrollHeight + 30}px`;
-//   coll[i].addEventListener("click", function() {
-//     let content = this.nextElementSibling;
-//     console.log(content.style.maxHeight)
-//     if (!content.style.maxHeight) {
-//       content.style.maxHeight = `${content.scrollHeight + 30}px`;
-//     } else {
-//       content.style.maxHeight = null;
-//     }
-//   });
-// }
-
-// for (i = 0; i < delPoint.length; i++) {
-//   delPoint[i].addEventListener("click", function() {
-//     let pointMarker = this.parentNode.parentNode.parentNode;
-//     pointMarker.parentNode.removeChild(pointMarker);
-//   });
-// }
-
+// Adds point-marker element to markers div
 addPoint.addEventListener("click", () => {
     const pointContainer = document.querySelector(".markers");
     const node = document.createElement("point-marker");
+    pointContainer.appendChild(node);
+});
 
-    pointContainer.appendChild(node)
-})
+// Grabs all point-marker elements, grabs relevant data and adds it to data array
+savePoints.addEventListener("click", () => {
+    // clears data
+    let data = []
+    markers = document.querySelectorAll("point-marker");
+    
+    // Iterates through markers
+    for (i = 0; i < markers.length; i++) {    
+        // Grabs all relevant info
+        let name = markers[i].shadowRoot.querySelector(".name").textContent;
+        let location = markers[i].shadowRoot.querySelector(".location").textContent;
+        let clue = markers[i].shadowRoot.querySelector("#clue").value;
+        
+        // Saves all relevant info in object form
+        let point = {}
+        point = {
+            id: `${i}`,
+            name: `${name}`,
+            location: `${location} ${i}`,
+            clue: `${clue}`
+        }
+        
+        // Adds point to data
+        data.push(point)
+    }
+    return data;
+});
+

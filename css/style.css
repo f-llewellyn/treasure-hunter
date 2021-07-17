@@ -62,57 +62,6 @@ main h1 {
     margin-bottom: 1rem;
 }
 
-/* .point-marker {
-    color: var(--tertiary-color);
-    background-color: var(--secondary-color);
-    padding: 2rem;
-    border-radius: 20px;
-    margin: 1rem 0;
-}
-
-.point-marker h2 {
-    line-height: 1rem;
-    margin-bottom: .6rem;
-}
-
-.point-marker textarea {
-    width: 100%;
-    height: 100px;
-    border-radius: 20px;
-    resize: vertical;
-    padding: .5rem;
-    margin: 1rem 0;
-}
-
-
-
-.del-btn {
-    background-color: var(--fail-color);
-}
-
-.btns {
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-.coll-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 250ms ease-in-out;
-}
-
-.collapse-icon {
-    font-size: large;
-}
-
-.const-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-} */
-
 .btn {
     background-color: var(--primary-color);
     border: none;
