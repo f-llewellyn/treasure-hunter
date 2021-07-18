@@ -135,7 +135,6 @@ class PointMarker extends HTMLElement {
             console.log(`Latitude : ${location.latitude}`);
             console.log(`Longitude: ${location.longitude}`);
             console.log(`More or less ${location.accuracy} meters.`);
-            alert(`More or less ${location.accuracy} meters.`)
             latVal.textContent = `${location.latitude}`;
             longVal.textContent = `${location.longitude}`;
         }
@@ -157,9 +156,14 @@ class PointMarker extends HTMLElement {
     }
 
     // Deletes point marker
-    deletePoint() {
-        this.disconnectedCallback();
-        this.remove();
+    async deletePoint() {
+        const coll = this.shadowRoot.querySelector(".const-content");
+        let content = coll.nextElementSibling;
+        content.style.maxHeight = null;
+        setTimeout(() => {
+            this.disconnectedCallback();
+            this.remove();
+        }, 250)
     };
 
     // Adds event listener on all elements with class of const-content or del-btn
