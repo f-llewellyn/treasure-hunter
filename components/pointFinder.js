@@ -5,7 +5,7 @@ template.innerHTML = `
     <link rel="stylesheet" href="css/style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        .point-marker {
+        .point-finder {
             color: var(--tertiary-color);
             background-color: var(--secondary-color);
             padding: 2rem;
@@ -13,11 +13,11 @@ template.innerHTML = `
             margin: 1rem 0;
         }
         
-        .point-marker h2 {
+        .point-finder h2 {
             line-height: 1rem;
         }
         
-        .point-marker textarea {
+        .point-finder textarea {
             width: 100%;
             height: 100px;
             border-radius: 20px;
@@ -77,23 +77,21 @@ template.innerHTML = `
 
     <section class="point-marker">
     <div class="const-content noSelect">
-        <h2 class="name">New Point</h2>
+        <h2 class="name">New Point <span class="icon"></span></h2>
         <i class="fas fa-minus collapse-icon"></i>
     </div>
     <div class="coll-content">
-        <p>Location:    <span class="lat"></span>    <span>  </span>    <span class="long"></span></p>
         <p>Clue:</p>
-        <textarea name="clue" id="clue" cols="30" rows="10"></textarea>
+        <p class="clue-body"></p>
         <div class="btns">
-            <button class="btn loc-btn noSelect">SET CURRENT LOCATION</button>
-            <button class="btn del-btn noSelect">DELETE POINT</button>
+            <button class="btn loc-chk-btn noSelect">Check Location</button>
         </div>
     </div>
     </section>
 `;
 
 // Declares class PointMarker and casts it as an HTML element
-class PointMarker extends HTMLElement {
+class PointFinder extends HTMLElement {
     // Initialises the class every time new object is made
     constructor() {
         super();
@@ -102,17 +100,6 @@ class PointMarker extends HTMLElement {
         this.attachShadow({ mode: "open" });
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-
-        setTimeout(() => {
-            const coll = this.shadowRoot.querySelector(".const-content");
-            coll.nextElementSibling.style.maxHeight = `${coll.nextElementSibling.scrollHeight}px`;
-        }, 100)
-
-        const name = this.shadowRoot.querySelector(".name")
-        name.contentEditable = "true";
-
-
     };
 
     // Collapses or expands the collapsable content
@@ -135,8 +122,6 @@ class PointMarker extends HTMLElement {
             console.log(`Latitude : ${location.latitude}`);
             console.log(`Longitude: ${location.longitude}`);
             console.log(`More or less ${location.accuracy} meters.`);
-            alert(`More or less ${location.accuracy} meters.`);
-
             latVal.textContent = `${location.latitude}`;
             longVal.textContent = `${location.longitude}`;
         }
@@ -149,7 +134,7 @@ class PointMarker extends HTMLElement {
         const options = {
             enableHighAccuracy: true,
             timeout: 5000,
-            maximumAge: 100
+            maximumAge: 0
         }
 
         const latVal = this.shadowRoot.querySelector(".lat");
@@ -157,32 +142,30 @@ class PointMarker extends HTMLElement {
         window.navigator.geolocation.getCurrentPosition(locSuccess, locFail, options);
     }
 
-    // Deletes point marker
-    async deletePoint() {
-        const coll = this.shadowRoot.querySelector(".const-content");
-        let content = coll.nextElementSibling;
-        content.style.maxHeight = null;
-        setTimeout(() => {
-            this.disconnectedCallback();
-            this.remove();
-        }, 250)
-    };
+    // // Deletes point marker
+    // async deletePoint() {
+    //     const coll = this.shadowRoot.querySelector(".const-content");
+    //     let content = coll.nextElementSibling;
+    //     content.style.maxHeight = null;
+    //     setTimeout(() => {
+    //         this.disconnectedCallback();
+    //         this.remove();
+    //     }, 250)
+    // };
 
     // Adds event listener on all elements with class of const-content or del-btn
     connectedCallback() {
         this.shadowRoot.querySelector(".collapse-icon").addEventListener("click", () => this.expandCollapse());
-        this.shadowRoot.querySelector(".del-btn").addEventListener("click", () => this.deletePoint());
-        this.shadowRoot.querySelector(".loc-btn").addEventListener("click", () => this.getLocation());
+        this.shadowRoot.querySelector(".loc-chk-btn").addEventListener("click", () => this.getLocation());
     };
     
     // Adds event listener on all elements with class of del-btn
     disconnectedCallback() {
         this.shadowRoot.querySelector(".collapse-icon").removeEventListener("click", () => this.expandCollapse());
-        this.shadowRoot.querySelector(".del-btn").removeEventListener("click", () => this.deletePoint());
-        this.shadowRoot.querySelector(".loc-btn").removeEventListener("click", () => this.getLocation());
+        this.shadowRoot.querySelector(".loc-chk-btn").removeEventListener("click", () => this.getLocation());
 
     };
 };
 
 // Defines <point-marker>
-window.customElements.define("point-marker", PointMarker);
+window.customElements.define("point-finder", PointFinder);

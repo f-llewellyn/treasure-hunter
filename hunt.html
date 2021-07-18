@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="./chest.svg">
-    <title>Create A Hunt</title>
+    <title>Follow a hunt</title>
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="manifest" href="./manifest.json">
 
@@ -24,26 +24,24 @@
     </header>
 
     <main>
-        <h1>CREATE A HUNT</h1>
-        <div class="markers">
+        <h1>Find the treasure!</h1>
+
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Read the clue you can see on the screen. It will help you work out where you need to go.</li>
+            <li>When you get to the place you think you need to go to, press the orange “Check location Button”. If you are in the right place, a itck will pop up and you will be able to see the next clue.</li>
+        </ol>
+        <div class="finders">
         </div>
-
-        <button class="btn add-point add noSelect">
-            <h2>Add Point +</h2>
-        </button>
-
-        <button class="btn add-point save noSelect">
-            <h2>Save Points</h2>
-        </button>
 
     </main>
 
     <script>
         if("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./serviceWorker.js");
+            navigator.serviceWorker.register("./js/serviceWorker.js");
         }
     </script>
-    <script src="./js/create.js"></script>
-    <script src="./components/pointMarker.js"></script>
+    <script src="./js/hunt.js"></script>
+    <script src="./components/pointFinder.js"></script>
 </body>
 </html>
