@@ -12,7 +12,9 @@ addPoint.addEventListener("click", () => {
 // Grabs all point-marker elements, grabs relevant data and adds it to data array
 savePoints.addEventListener("click", () => {
     // clears data
-    let data = []
+    let data = {
+        "points": []
+    }
     markers = document.querySelectorAll("point-marker");
     
     // Iterates through markers
@@ -36,8 +38,8 @@ savePoints.addEventListener("click", () => {
         }
         
         // Adds point to data
-        data.push(point)
+        data.points.push(point)
     }
     console.log(data);
-    return data;
+    data = JSON.stringify(data);
 });
