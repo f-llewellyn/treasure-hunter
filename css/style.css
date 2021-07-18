@@ -135,6 +135,15 @@ main h1 {
     opacity: 100%;
 }
 
+ol {
+    margin-left: 3rem;
+    line-height: 1.6;
+}
+
+ol li {
+    font-size: 15px;
+}
+
 .noSelect {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
