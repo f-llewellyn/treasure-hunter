@@ -135,6 +135,8 @@ class PointMarker extends HTMLElement {
             console.log(`Latitude : ${location.latitude}`);
             console.log(`Longitude: ${location.longitude}`);
             console.log(`More or less ${location.accuracy} meters.`);
+            alert(`More or less ${location.accuracy} meters.`);
+
             latVal.textContent = `${location.latitude}`;
             longVal.textContent = `${location.longitude}`;
         }
@@ -147,7 +149,7 @@ class PointMarker extends HTMLElement {
         const options = {
             enableHighAccuracy: true,
             timeout: 5000,
-            maximumAge: 0
+            maximumAge: 100
         }
 
         const latVal = this.shadowRoot.querySelector(".lat");
