@@ -46,15 +46,12 @@ template.innerHTML = `
         .btn:active {
             opacity: 80%;
         }
-
-        .del-btn {
-            background-color: var(--fail-color);
-        }
         
         .btns {
             display: flex;
             width: 100%;
             justify-content: space-evenly;
+            margin-top: 1rem;
         }
         
         .coll-content {
@@ -73,11 +70,19 @@ template.innerHTML = `
             justify-content: space-between;
             cursor: pointer;
         }
+
+        i {
+            margin-left: .5rem;
+        }
+
+        .fa-lock {
+            color: var(--fail-color);
+        }
     </style>
 
-    <section class="point-marker">
+    <section class="point-finder">
     <div class="const-content noSelect">
-        <h2 class="name">New Point <span class="icon"></span></h2>
+        <h2 class="name"><i class="lock-status fas fa-lock"></i></h2>
         <i class="fas fa-minus collapse-icon"></i>
     </div>
     <div class="coll-content">
