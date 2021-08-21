@@ -3,7 +3,6 @@
   "short-name": "Hunt",
   "start_url": "https://fllewellyn.com/treasure-hunter/create.html",
   "description": "An app that allows you to create and take part in treasure hunts.",
-  "scope": "/",
   "icons": [
       {
           "src": "icons/manifest-icon-192.png",
